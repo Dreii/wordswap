@@ -1,0 +1,40 @@
+.tabs-container{
+  width: 100%;
+  background: none;
+}
+
+.tabs-header{
+  background: none;
+}
+
+.tabs-button-container{
+  display: flex;
+  background: none;
+}
+
+.tabs-button-container>button{
+  border: none;
+  flex: 1;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: bold;
+  color: rgb(158, 158, 158);
+  height: 48px;
+  background: none;
+}
+
+.tabs-button-container>button:active, .tabs-button-container>button:focus{
+  outline: none;
+  border: none;
+}
+
+.tab-highlight{
+  position: relative;
+  height: 2px;
+  background: rgb(158, 158, 158);
+  transition: left 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.tabs-content{
+
+}
