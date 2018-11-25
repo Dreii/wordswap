@@ -1,8 +1,12 @@
+import dotenv from 'dotenv'
+
 import React, { Component } from 'react'
 import './App.css'
 
 import Auth from '../Auth/Auth'
 import Home from '../Home/Home'
+
+dotenv.config()
 
 class App extends Component {
   state={

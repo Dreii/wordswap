@@ -13,6 +13,5 @@ module.exports = {
     turn: {type: Number, default: 0},
     letterScores: {type: [{letter: String, score: Number}], default:[]},
     chatLogs: {type: [{player: String, message: String}], default: []},
-    initialRequiredLetter: {type: String, default: 'A'}
   }
 }

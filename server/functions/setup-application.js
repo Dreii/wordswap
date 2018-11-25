@@ -14,14 +14,14 @@ app.use(app.bodyParser.urlencoded({
   extended: true
 }));
 
-app.io = require('socket.io')()
-require('./setupSocketConnections')(app, 8000)
+// app.io = require('socket.io')()
+// require('./setupSocketConnections')(app, 8000)
 
 //Prepare DB schema's.
 app.mongoose = require('mongoose');
 app.mongoose.Promise = Promise;
-app.db = require("../database/database-controller");
-app.db.init();
+// app.db = require("../database/database-controller");
+// app.db.init();
 
 //Set Port information
 app.set("port", process.env.PORT || 3001);
