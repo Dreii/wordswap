@@ -2,6 +2,8 @@
 const express = require("express");
 const app = express();
 
+require('dotenv').config()
+
 //Setup encryption tools.
 app.jwt = require('jsonwebtoken');
 app.bcrypt = require('bcryptjs');
@@ -20,8 +22,8 @@ app.use(app.bodyParser.urlencoded({
 //Prepare DB schema's.
 app.mongoose = require('mongoose');
 app.mongoose.Promise = Promise;
-// app.db = require("../database/database-controller");
-// app.db.init();
+app.db = require("../database/database-controller");
+app.db.init();
 
 //Set Port information
 app.set("port", process.env.PORT || 3001);

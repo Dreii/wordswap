@@ -7,7 +7,7 @@ module.exports = {
     username: {type: String, unique: true, required: true},
     price: {type: Number, default: 0},
     model: {type: Number, unique: true, required: true},
-    textures: {type: [String], default: []},
+    textures: [{type: String, default: ""}],
     description: {type: String, default: ""}
   }
 }

@@ -1,10 +1,28 @@
 let baseUrl = ''
 
 class API{
-  static auth(body){
+  static login(body){
     let payload = {...this.postData, body: JSON.stringify(body)}
 
     return this.handleResponse(fetch(baseUrl+'/login', payload))
+  }
+
+  static signup(body){
+    let payload = {...this.postData, body: JSON.stringify(body)}
+
+    return this.handleResponse(fetch(baseUrl+'/signup', payload))
+  }
+
+  static fbLogin(body){
+    let payload = {...this.postData, body: JSON.stringify(body)}
+
+    return this.handleResponse(fetch(baseUrl+'/fb-login', payload))
+  }
+
+  static submitUsername(body){
+    let payload = {...this.postData, body: JSON.stringify(body)}
+
+    return this.handleResponse(fetch(baseUrl+'/submit-username', payload))
   }
 
   static handleResponse(promise){
@@ -19,7 +37,7 @@ class API{
         console.log(body);
         if(body.error) throw Error(body.error)
 
-        return {token, body: body.data};
+        return {token:body.token, data: body.data};
       })
   }
 }

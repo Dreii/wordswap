@@ -13,7 +13,7 @@ class Home extends Component {
   }
 
   render() {
-    let pathProps = this.state.data
+    let pathProps = {...this.props}
 
     return (
       <div>
