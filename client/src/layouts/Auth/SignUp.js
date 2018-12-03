@@ -14,10 +14,12 @@ const Auth = ({authenticate}) => (
         <input type="text" name="email"/>
         <label htmlFor="password">Password</label>
         <input type="text" name="password"/>
+        <label htmlFor="confirm-password">Confirm Password</label>
+        <input type="text" name="confirm-password"/>
       </form>
-      <button className={styles.submit} onClick={authenticate}>Log In</button>
+      <button onClick={authenticate}>Sign Up</button>
     </div>
-    <p>No account? <a href="/signup">Sign up!</a></p>
+    <p>Have an account? <a href="/">Log In!</a></p>
   </div>
 );
 

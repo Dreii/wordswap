@@ -1,0 +1,81 @@
+/* Center everything */
+.main,
+.logo,
+.formContainer,
+input,
+form {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*** Apply Oswald font ***/
+.title, button, p {
+  font-family: Oswald, sans-serif;
+}
+
+.formContainer {
+  margin-top: 100px;
+  padding-top: 50px;
+  background-color: white;
+  max-width: 300px;
+  border-radius: 3%;
+}
+
+.logo {
+  margin-top: -75px;
+  height: 48.75px;
+  width: 48.75px;
+}
+
+.title {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 3em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.red {
+  color: #ee4444;
+}
+
+.blue {
+  color: #31a8f2;
+}
+
+form {
+  max-width: 200px;
+}
+
+input {
+  margin-top: 15px;
+  min-height: 30px;
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+.submit {
+  background-color: #d24242;
+  color: white;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 25px;
+  min-height: 45px;
+  width: 100%;
+  border-radius: 0 0 3% 3%;
+  box-shadow: 0 5px #9f2322;
+}
+
+p {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 1.125em;
+  color: white;
+}
+
+a {
+  color: white;
+  font-size: 1em;
+}
