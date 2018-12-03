@@ -26,10 +26,10 @@ class API{
   }
 
   static handleResponse(promise){
-    let token
+    // let token
     return promise
       .then(response => {
-        token = response.headers.get('x-access-token')
+        // token = response.headers.get('x-access-token')
         console.log(response)
         return response.json()
       })

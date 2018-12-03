@@ -53,7 +53,7 @@ class Auth extends Component {
   }
 
   render() {
-    let {authenticate} = this.props
+    // let {authenticate} = this.props
 
     return (
       <div className="auth">

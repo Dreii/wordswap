@@ -12,7 +12,7 @@ class App extends Component {
   state={
     auth: false,
     token: "",
-    user: null
+    user: null 
   }
 
   render() {

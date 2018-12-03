@@ -18,11 +18,11 @@ class DatabaseController{
 
     //get all default read and write functions for use with our schemas
     this.functions = {
-      verify: require('./functions/verify')(this),
-      checkFBID: require('./functions/checkFBID')(this),
-      checkFBToken: require('./functions/checkFBToken'),
-      authenticate: require('./functions/authenticate')(this),
-      createUser: require('./functions/create-user')(this),
+      verify: require('./functions/auth/verify')(this),
+      checkFBID: require('./functions/auth/checkFBID')(this),
+      checkFBToken: require('./functions/auth/checkFBToken'),
+      authenticate: require('./functions/auth/authenticate')(this),
+      createUser: require('./functions/auth/create-user')(this),
       updateUser: require('./functions/update-user')(this)
     }
 
