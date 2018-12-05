@@ -46,27 +46,6 @@ class SocketController{
         console.log("CONNECTED to port: "+this.PORT);
       })
     }
-
-    this.updateMatch = (matchData, sender) => {
-      console.log("should update here");
-      let reciever
-
-      reciever = sender === 1 ? matchData.playerTwo : matchData.playerOne
-      reciever = reciever !== undefined ? reciever.id.toString() : ''
-
-      let playerSocketObject = this.connectedUsers.find((connection)=>{
-        console.log(connection, reciever);
-        return connection.user.toString() === reciever
-      })
-
-      if(playerSocketObject){
-        console.log(playerSocketObject.socket);
-        if(io.sockets.connected[playerSocketObject.socket])
-          io.sockets.connected[playerSocketObject.socket].emit('MATCH_UPDATED', matchData)
-      }else{
-        console.log("no connected user");
-      }
-    }
   }
 }
 

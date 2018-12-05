@@ -44,7 +44,6 @@ class Auth extends Component {
   sendFBLogin = (data) => {
     API.fbLogin(data)
     .then((res) => {
-      console.log(res)
       this.props.completeAuth(res.token, res.data)
     })
     .catch(error => {

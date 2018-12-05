@@ -16,8 +16,10 @@ app.use(app.bodyParser.urlencoded({
   extended: true
 }));
 
-// app.io = require('socket.io')()
-// require('./setupSocketConnections')(app, 8000)
+require('../wordlist/createWordList')()
+
+app.io = require('socket.io')()
+require('./setupSocketConnections')(app, 8000)
 
 //Prepare DB schema's.
 app.mongoose = require('mongoose');

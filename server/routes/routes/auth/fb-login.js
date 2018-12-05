@@ -19,7 +19,6 @@ module.exports = (app) => {
       }
     })
     .then(user => {
-      console.log(user)
       var token = app.jwt.sign({ id: user._id }, app.config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });

@@ -1,3 +1,5 @@
+import io from 'socket.io-client'
+const socketUrl = "http://localhost:3231"
 let baseUrl = ''
 
 class API{
@@ -25,16 +27,30 @@ class API{
     return this.handleResponse(fetch(baseUrl+'/submit-username', payload))
   }
 
+  static connectSocket = (userID) => {
+    console.log("attempting connection");
+    const socket = io(socketUrl)
+    socket.on('connect', ()=>{
+      socket.emit('USER_CONNECTED', userID)
+      console.log("Connected")
+    })
+    // 
+    // socket.on('MATCH_UPDATED', (matchData)=>{
+    //   console.log("starting", matchData)
+    // })
+    return socket
+  }
+
   static handleResponse(promise){
     // let token
     return promise
       .then(response => {
         // token = response.headers.get('x-access-token')
-        console.log(response)
+        // console.log(response)
         return response.json()
       })
       .then((body) => {
-        console.log(body);
+        // console.log(body);
         if(body.error) throw Error(body.error)
 
         return {token:body.token, data: body.data};

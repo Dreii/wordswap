@@ -1,4 +1,4 @@
-const request = require('../../functions/DBFunctions')
+const request = require('./DBFunctions')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = () => {
@@ -22,6 +22,28 @@ module.exports = () => {
 
   })
 
+  require('./read-data-from-files')()
+  .then((lists)=>{
+    lists.forEach(list => {
+      list.forEach(word => {
+        let sql = `
+          INSERT INTO words (word, firstLetter, lastLetter, length)
+          VALUES (
+            "${word}",
+            "${word.charAt(0)}",
+            "${word.charAt(word.length-1)}",
+            "${word.length}"
+          )
+        `
 
+        db.get(sql, (err, row)=>{
+          if(err) return console.log(err.message);
+          else{
+            console.log(word)
+          }
+        })
+      })
+    })
+  })
   return db
 }
