@@ -1,24 +1,45 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import styles from './Auth.module.css';
+import Login from './Login';
+import SignUp from './SignUp';
 
-const Auth = ({authenticate}) => (
-  <div>
-    <div className={styles.formContainer}>
-      <img className={styles.logo} src="wordswap-logo.png" alt="wordswap logo" />
-      <h2 className={styles.title}>
-        <span className={styles.red}>Word</span><span className={styles.blue}>Swap</span>
-      </h2>
-      <form method="POST">
-        <label htmlFor="email">Email</label>
-        <input type="text" name="email"/>
-        <label htmlFor="password">Password</label>
-        <input type="text" name="password"/>
-      </form>
-      <button className={styles.submit} onClick={authenticate}>Log In</button>
-    </div>
-    <p>No account? <a href="/signup">Sign up!</a></p>
-  </div>
-);
+class Auth extends Component {
+
+  state = {
+    showLogin: true
+  }
+
+  toggleLoginSignUp = () => {
+    if(this.state.showLogin) {
+      this.setState({
+        showLogin: false
+      })
+    } else {
+      this.setState({
+        showLogin: true
+      })
+    }
+
+  }
+
+  render() {
+    return (
+      (this.state.showLogin)
+      ? (
+        <div>
+          <Login authenticate={this.props.authenticate} />
+          <p>No account? <button onClick={this.toggleLoginSignUp}>Sign up!</button></p>
+        </div>
+      )
+      : (
+        <div>
+          <SignUp authenticate={this.props.authenticate} />
+            <p>Have an account? <button onClick={this.toggleLoginSignUp}>Log In!</button></p>
+        </div>
+      )
+    )
+  }
+
+};
 
 export default Auth;
