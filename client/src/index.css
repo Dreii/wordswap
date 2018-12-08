@@ -16,6 +16,7 @@ code {
 /*** Reset browser default styles***/
 button {
   border: none;
+  outline: none;
   padding: 0;
   background-color: transparent;
 }
