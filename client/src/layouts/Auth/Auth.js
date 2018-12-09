@@ -19,7 +19,6 @@ class Auth extends Component {
         showLogin: true
       })
     }
-
   }
 
   render() {
@@ -39,7 +38,6 @@ class Auth extends Component {
       )
     )
   }
-
 };
 
 export default Auth;

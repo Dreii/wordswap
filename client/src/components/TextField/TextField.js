@@ -8,7 +8,7 @@ class TextField extends Component {
   }
 
   render() {
-    let {id, value, label, onChange, style, labelStyle, inputStyle, fullWidth} = this.props
+    let {id, type, value, label, onChange, style, labelStyle, inputStyle, fullWidth} = this.props
     return (
       <div
         className={`text-field ${fullWidth ? 'full' : ''}`}
@@ -24,6 +24,7 @@ class TextField extends Component {
           {label}
         </label>
         <input
+          type={type}
           id={`input-${id}`}
           value={value}
           style={{inputStyle}}
