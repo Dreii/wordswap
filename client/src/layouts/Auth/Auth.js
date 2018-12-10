@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import Login from './Login';
-import SignUp from './SignUp';
+import Login from './Login'
+import SignUp from './SignUp'
 
 class Auth extends Component {
 
@@ -25,19 +25,19 @@ class Auth extends Component {
     return (
       (this.state.showLogin)
       ? (
-        <div>
+        <div className="authPage">
           <Login authenticate={this.props.authenticate} />
           <p>No account? <button onClick={this.toggleLoginSignUp}>Sign up!</button></p>
         </div>
       )
       : (
-        <div>
+        <div className="authPage">
           <SignUp authenticate={this.props.authenticate} />
             <p>Have an account? <button onClick={this.toggleLoginSignUp}>Log In!</button></p>
         </div>
       )
     )
   }
-};
+}
 
-export default Auth;
+export default Auth
