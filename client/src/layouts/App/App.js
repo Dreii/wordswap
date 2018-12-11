@@ -6,13 +6,16 @@ import './App.css'
 import Auth from '../Auth/Auth'
 import Home from '../Home/Home'
 
+import API from '../../functions/api'
+
 dotenv.config()
 
 class App extends Component {
   state={
     auth: false,
     token: "",
-    user: null 
+    user: null,
+    socket: null,
   }
 
   render() {
@@ -21,16 +24,19 @@ class App extends Component {
         {this.state.user === null ? (
           <Auth
             completeAuth={(token, user)=>{
-              console.log(token, user)
               this.setState({token, user})
+              API.connectSocket(user._id)
+              .then((socket)=>{
+                this.setState({socket})
+              })
             }}
           />
         ):(
           <Home
             token={this.state.token}
             user={this.state.user}
+            socket={this.state.socket}
             setUserGlobalState={(newUser)=>{
-              console.log(newUser)
               this.setState({user: newUser})
             }}
             deauthenticate={()=>this.setState({auth: false})}

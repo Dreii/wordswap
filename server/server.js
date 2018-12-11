@@ -4,8 +4,8 @@ const app = require('./functions/setup-application');
 console.log("building..");
 
 //setup Socket.
-// app.io = require('./socket/socket-controller')
-// app.io.connect()
+app.io = require('./socket/socket-controller')
+app.io.connect(app.db)
 
 //Setup Routes.
 require('./routes/route-controller')(app);

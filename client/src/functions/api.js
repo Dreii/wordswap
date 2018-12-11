@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-const socketUrl = "http://localhost:3231"
+const socketUrl = `http://${window.location.hostname}:3231`
 let baseUrl = ''
 
 class API{
@@ -28,17 +28,32 @@ class API{
   }
 
   static connectSocket = (userID) => {
-    console.log("attempting connection");
-    const socket = io(socketUrl)
-    socket.on('connect', ()=>{
-      socket.emit('USER_CONNECTED', userID)
-      console.log("Connected")
+    return new Promise((resolve, reject)=>{
+      console.log("attempting connection")
+      const socket = io(socketUrl)
+      socket.on('connect', ()=>{
+        socket.emit('USER_CONNECTED', userID)
+        console.log("Connected")
+        resolve(socket)
+      })
+
+      socket.on('error', (err)=>{
+        reject(err)
+      })
     })
-    // 
-    // socket.on('MATCH_UPDATED', (matchData)=>{
-    //   console.log("starting", matchData)
-    // })
-    return socket
+  }
+
+
+  static lookForMatch = (socket) => {
+    return new Promise((resolve, reject) => {
+      socket.emit('lfm')
+      socket.on('mf', (match)=>{
+        console.log("match found", match)
+        resolve(match)
+      })
+
+      socket.on('error', (err)=>reject(err))
+    })
   }
 
   static handleResponse(promise){

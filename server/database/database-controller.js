@@ -23,7 +23,10 @@ class DatabaseController{
       checkFBToken: require('./functions/auth/checkFBToken'),
       authenticate: require('./functions/auth/authenticate')(this),
       createUser: require('./functions/auth/create-user')(this),
-      updateUser: require('./functions/update-user')(this)
+      updateUser: require('./functions/update-user')(this),
+
+      findMatch: require('./functions/matches/find-match')(this),
+      updateMatch: require('./functions/matches/update-match')(this),
     }
 
     //create a function initialize the database connection later
