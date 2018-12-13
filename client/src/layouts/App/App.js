@@ -6,7 +6,7 @@ import Home from '../Home/Home'
 
 class App extends Component {
   state={
-    auth: false
+    auth: true
   }
 
   render() {

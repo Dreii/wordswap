@@ -25,13 +25,13 @@ class Auth extends Component {
     return (
       (this.state.showLogin)
       ? (
-        <div className="authPage">
+        <div className="auth">
           <Login authenticate={this.props.authenticate} />
           <p>No account? <button onClick={this.toggleLoginSignUp}>Sign up!</button></p>
         </div>
       )
       : (
-        <div className="authPage">
+        <div className="auth">
           <SignUp authenticate={this.props.authenticate} />
             <p>Have an account? <button onClick={this.toggleLoginSignUp}>Log In!</button></p>
         </div>

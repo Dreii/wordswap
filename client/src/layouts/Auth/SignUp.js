@@ -4,7 +4,7 @@ import './Auth.css';
 import TextField from '../../components/TextField/TextField';
 
 const SignUp = ({authenticate}) => (
-  <div className="authForm">
+  <div className="formContainer">
     <img className="logo" src="wordswap-logo.png" alt="wordswap logo" />
     <h2 className="title">
       <span className="red">Word</span><span className="blue">Swap</span>

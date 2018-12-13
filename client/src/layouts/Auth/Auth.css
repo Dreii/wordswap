@@ -1,19 +1,14 @@
 /* Center everything */
-.authForm,
-.authForm .logo,
-.authForm input,
-.authForm form {
+.auth .formContainer,
+.auth .logo,
+.auth input,
+.auth form {
   display: block;
   margin-right: auto;
   margin-left: auto;
 }
 
-/*** Apply Oswald font ***/
-.authForm .title, .authPage button, .authPage p {
-  font-family: Oswald, sans-serif;
-}
-
-.authForm {
+.auth .formContainer {
   margin-top: 100px;
   padding-top: 50px;
   background-color: white;
@@ -21,13 +16,13 @@
   border-radius: 3%;
 }
 
-.authForm .logo {
+.auth .logo {
   margin-top: -75px;
   height: 48.75px;
   width: 48.75px;
 }
 
-.authForm .title {
+.auth .title {
   margin-top: 25px;
   margin-bottom: 0;
   font-size: 3rem;
@@ -35,24 +30,28 @@
   text-align: center;
 }
 
-.red {
+.auth label {
+  font-family: "Open Sans", sans-serif;
+}
+
+.auth .red {
   color: #ee4444;
 }
 
-.blue {
+.auth .blue {
   color: #31a8f2;
 }
 
-.authForm form {
+.auth form {
   max-width: 250px;
 }
 
-.authPage button {
+.auth button {
   color: white;
   font-size: 1.25rem;
 }
 
-.authForm .submit {
+.auth .submit {
   background-color: #d24242;
   text-transform: uppercase;
   font-weight: bold;
@@ -64,7 +63,7 @@
   margin-top: 45px;
 }
 
-.authPage p {
+.auth p {
   margin-top: 50px;
   text-align: center;
   color: white;
