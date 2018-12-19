@@ -1,4 +1,4 @@
-module.exports = (self) => async function(matchID, update, socket){
+module.exports = (self) => async function(matchID, update, receiver){
   let match = await self.schemas.Match.findOneAndUpdate(
     {_id: matchID},
     {$set: { ...update }},
@@ -7,6 +7,6 @@ module.exports = (self) => async function(matchID, update, socket){
   .populate('playerOne')
   .populate('playerTwo')
 
-  socket.emit('mu', match)
+  receiver.emit('MATCH_UPDATED', match)
   return match
 }

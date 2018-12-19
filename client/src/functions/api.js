@@ -3,31 +3,31 @@ const socketUrl = `http://${window.location.hostname}:3231`
 let baseUrl = ''
 
 class API{
-  static login(body){
+  static Login(body){
     let payload = {...this.postData, body: JSON.stringify(body)}
 
     return this.handleResponse(fetch(baseUrl+'/login', payload))
   }
 
-  static signup(body){
+  static Signup(body){
     let payload = {...this.postData, body: JSON.stringify(body)}
 
     return this.handleResponse(fetch(baseUrl+'/signup', payload))
   }
 
-  static fbLogin(body){
+  static FBLogin(body){
     let payload = {...this.postData, body: JSON.stringify(body)}
 
     return this.handleResponse(fetch(baseUrl+'/fb-login', payload))
   }
 
-  static submitUsername(body){
+  static SubmitUsername(body){
     let payload = {...this.postData, body: JSON.stringify(body)}
 
     return this.handleResponse(fetch(baseUrl+'/submit-username', payload))
   }
 
-  static connectSocket = (userID) => {
+  static ConnectSocket = (userID) => {
     return new Promise((resolve, reject)=>{
       console.log("attempting connection")
       const socket = io(socketUrl)
@@ -44,16 +44,29 @@ class API{
   }
 
 
-  static lookForMatch = (socket) => {
+  static LookForMatch = (socket, userID) => {
     return new Promise((resolve, reject) => {
-      socket.emit('lfm')
-      socket.on('mf', (match)=>{
+      socket.emit('USER_LOOKING_FOR_MATCH', userID)
+      socket.on('MATCH_FOUND', (match)=>{
         console.log("match found", match)
-        resolve(match)
+        resolve({
+          match,
+          error: null,
+        })
       })
 
-      socket.on('error', (err)=>reject(err))
+      window.setTimeout(()=>{
+        resolve({error: "The server is not responding."})
+      }, 10*1000)
+
+      socket.on('ERROR', (err)=>resolve({
+        error: "There was an error: "+err
+      }))
     })
+  }
+
+  static LeaveMatch = (socket, userID) => {
+      socket.emit('USER_LEAVING_MATCH', userID)
   }
 
   static handleResponse(promise){

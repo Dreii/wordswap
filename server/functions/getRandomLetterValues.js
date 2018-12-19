@@ -9,7 +9,7 @@ const randomLetterScores = () => {
   for(let i = 0; i < 4; i++){
 
     let letter = randomLetter()
-    while(points.includes(letter)){
+    while(points.find(point => point.letter == letter)){
       letter = randomLetter()
     }
 
@@ -22,6 +22,4 @@ const randomLetterScores = () => {
   return points
 }
 
-module.exports = () => {
-  return randomLetterScores()
-}
+module.exports = randomLetterScores

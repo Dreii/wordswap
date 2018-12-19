@@ -1,29 +1,47 @@
 import React, { Component } from 'react'
 import './Match.css'
-import TextField from '../../../components/TextField/TextField'
 import API from '../../../functions/api'
+
+import FirstRound from './Stages/FirstRound'
+import InGame from './Stages/InGame'
+import LookingForMatch from './Stages/LookingForMatch'
+import MatchOver from './Stages/MatchOver'
 
 import {Link} from 'react-router-dom'
 
 class Match extends Component {
 
   state = {
-    playerInput: ""
+    playerInput: "",
+    error: ""
   }
 
   componentDidMount(){
     if(this.props.pathProps.socket){
       console.log("should be sending")
       if(!this.props.pathProps.match){
-        API.lookForMatch(this.props.pathProps.socket)
-        .then((match)=>this.props.matchProps.setMatch(match))
+        API.LookForMatch(this.props.pathProps.socket, this.props.pathProps.user._id)
+        .then((res)=>{
+          if(res.error){
+            this.setState({error: res.error})
+          }else{
+            this.props.matchProps.setMatch(res.match)
+          }
+        })
       }
+
+      this.props.pathProps.socket.on("MATCH_UPDATED", match => {
+        console.log("match was updated", match)
+        this.props.matchProps.setMatch(match)
+      })
     }
   }
 
-  determineHistory(match, userID, getPlayer){
-    if(match.playerOne === userID && getPlayer) return match.playerOneHist
-    else return match.playerTwoHist
+  componentWillUnmount(){
+    console.log("unmounting")
+    if(this.props.pathProps.socket && this.props.pathProps.match){
+      API.LeaveMatch(this.props.pathProps.socket)
+    }
   }
 
   sendTurn(){
@@ -32,39 +50,36 @@ class Match extends Component {
 
   render() {
     let {matchProps, pathProps} = this.props
+    let match = matchProps.match ? matchProps.match : null
+
+    let matchRender
+    if(match && match.playerTwo){
+      if(match.round === 0)
+        matchRender = <FirstRound
+                        match={match}
+                        playerInput={this.state.playerInput}
+                        setPlayerInput={(input)=>this.setState({playerInput: input})}
+                      />
+      else {
+        //rounds that = less then 0 mean the game has been won by one of the players
+        //-1 means player 1 won, -2 means player 2 won.
+        if(match.round < 0)
+          matchRender = <MatchOver match={match} />
+        else matchRender = <InGame
+                              match={match}
+                              userID={pathProps.user._id}
+                              playerInput={this.state.playerInput}
+                              setPlayerInput={(input)=>this.setState({playerInput: input})}
+                           />
+      }
+    }else matchRender = <LookingForMatch />
+
     return (
       <div>
         <p>Match</p>
         <Link to="/">Back Home</Link>
 
-        {this.props.matchProps.match ? (
-          <div>
-            <div style={{display: "flex"}}>
-              <div style={{width: "50%", textAlign:"center"}}>
-                <p>Player one history</p>
-                <ul>
-                  {
-                    this.determineHistory(matchProps.match, pathProps.user._id, true)
-                    .map(entry => <li>entry</li>)
-                  }
-                </ul>
-              </div>
-              <div style={{width: "50%", textAlign:"center"}}>
-                <p>Player two history</p>
-                <ul>
-                  {
-                    this.determineHistory(matchProps.match, pathProps.user._id, false)
-                    .map(entry => <li>entry</li>)
-                  }
-                </ul>
-              </div>
-            </div>
-
-          <TextField label="Player input" src={this.state.playerInput} onChange={(e)=>this.setState({playerInput: e.target.value})}/>
-        </div>
-        ):(
-          <p>Looking for match</p>
-        )}
+        {matchRender}
       </div>
     )
   }

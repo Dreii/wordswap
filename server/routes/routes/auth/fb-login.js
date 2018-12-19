@@ -7,7 +7,6 @@ module.exports = (app) => {
       else return app.db.functions.checkFBID(req.body.userID)
     })
     .then(user => {
-      console.log(user)
       if(user){
         return user
       }else{

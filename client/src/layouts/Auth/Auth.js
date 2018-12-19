@@ -21,7 +21,7 @@ class Auth extends Component {
   }
 
   sendLogin = () => {
-    API.login(this.state.login)
+    API.Login(this.state.login)
     .then((res)=>{
       console.log(res)
       this.props.completeAuth(res.token, res.data)
@@ -32,7 +32,7 @@ class Auth extends Component {
   }
 
   sendSignup = () => {
-    API.signup(this.state.signup)
+    API.Signup(this.state.signup)
     .then((res)=>{
       this.props.completeAuth(res.token, res.data)
     })
@@ -42,7 +42,7 @@ class Auth extends Component {
   }
 
   sendFBLogin = (data) => {
-    API.fbLogin(data)
+    API.FBLogin(data)
     .then((res) => {
       this.props.completeAuth(res.token, res.data)
     })
@@ -52,10 +52,9 @@ class Auth extends Component {
   }
 
   render() {
-    // let {authenticate} = this.props
-
     return (
       <div className="auth">
+        {this.props.redirect()}
         <p>{this.state.error.message}</p>
         <h1>Login</h1>
         <TextField

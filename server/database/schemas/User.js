@@ -11,6 +11,8 @@ module.exports = {
     fbUserID: {type: String, default:''},
     fbAccessToken: {type: String, default :''},
     rank: {type: Number, default: 0},
+    money: {type: Number, default: 0},
+    gems: {type: Number, default: 0},
     hat: {type: Schema.Types.ObjectId, ref: 'Clothing'},
     shirt: {type: Schema.Types.ObjectId, ref: 'Clothing'},
     pants: {type: Schema.Types.ObjectId, ref: 'Clothing'},

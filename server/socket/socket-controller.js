@@ -1,74 +1,32 @@
 let serv = require('http').createServer()
 let io = require('socket.io')(serv)
+let identifyUserFromSocket = require('./functions/identifyUserFromSocket')
+let ConnectUser = require('./functions/ConnectUser')
+let LookForMatch = require('./functions/LookForMatch')
+let UserDisconnected = require('./functions/UserDisconnected')
+
 
 //A class of socket helpers
 class SocketController{
   constructor(){
     this.PORT = 3231
     this.connectedUsers = []
+    this.io = io
 
     this.connect = (db) => {
-      io.on('connection', (socket)=>{
+      this.db = db
 
-        socket.on('USER_CONNECTED', (user)=>{
+      this.io.on('connection', (socket)=>{
 
-          let index = this.connectedUsers.findIndex(obj =>{
-            return obj.socket === socket.id
-          })
+        socket.on('USER_CONNECTED',          (user) => ConnectUser(this, socket, user))
 
-          console.log(index)
+        socket.on('RESOLVING_MISMATCH',      (user) => ConnectUser(this, socket, user))
 
-          if(index <= 0){
-            this.connectedUsers.push({
-              user: user,
-              socket: socket.id
-            })
-          }else{
-            this.connectedUsers[index].socket = socket.id
-          }
+        socket.on('USER_LOOKING_FOR_MATCH',  (user) => LookForMatch(this, socket, user))
 
-          console.log("connect", this.connectedUsers)
-        })
+        socket.on('USER_LEAVING_MATCH',      ()=> KickUserFromMatch(this, socket))
 
-        socket.on('lfm', ()=>{
-          console.log("ayy bb", socket.id)
-          let index = this.connectedUsers.findIndex(obj => obj.socket === socket.id)
-          let user = this.connectedUsers[index].user
-
-          return db.functions.findMatch(user, socket)
-          .then(match => socket.emit('mf', match))
-        })
-
-        // socket.on('lfm', ()=>{
-        //   let index = this.connectedUsers.findIndex(obj => obj.socket === socket.id)
-        //   let user = this.connectedUsers[index].user
-        //   // let socket = this.connectedUsers[index].socket
-        //
-        //   return db.functions.findMatch(user)
-        //   .then(match => socket.emit('fm', match))
-        // })
-
-        // socket.on('lfm', async function(socket){
-        //   console.log("ayy bb", console.log(socket.id))
-        //   let index = this.connectedUsers.findIndex(obj => obj.socket === socket.id)
-        //   let user = this.connectedUsers[index].user
-        //   // let socket = this.connectedUsers[index].socket
-        //   //
-        //   // let match = await db.functions.findMatch(user)
-        //   //
-        //   // socket.emit('fm', match)
-        // }.bind(this))
-
-        socket.on('disconnect', () => {
-          //find the object by searching for socket
-          let index = this.connectedUsers.findIndex(obj =>{
-            return obj.socket === socket
-          })
-
-          this.connectedUsers.splice(index, 1)
-
-          console.log("disconnect", this.connectedUsers);
-        })
+        socket.on('disconnect',              () => UserDisconnected(this, socket))
       })
 
       serv.listen(this.PORT, ()=>{
