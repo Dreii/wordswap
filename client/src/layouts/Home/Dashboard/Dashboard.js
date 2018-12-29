@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Dashboard.css'
 
+import FriendsList from '../../../components/FriendsList/FriendsList'
 import TextField from '../../../components/TextField/TextField'
 
 import API from '../../../functions/api'
@@ -15,7 +16,7 @@ class Dashboard extends Component {
   }
 
   submitUsername = () => {
-    API.submitUsername({username: this.state.newUsername, token: this.props.pathProps.token})
+    API.SubmitUsername({username: this.state.newUsername, token: this.props.pathProps.token})
     .then((res)=>{
       this.props.pathProps.setUserGlobalState({...this.props.pathProps.user, username: this.state.newUsername})
     })
@@ -45,6 +46,8 @@ class Dashboard extends Component {
         <Link to="/match">Play</Link>
         <br/>
         <Link to="/settings">Settings</Link>
+
+        <FriendsList list={[]} SendChallenge={()=> console.log("challenging friend")}/>
       </div>
     )
   }

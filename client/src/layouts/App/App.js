@@ -40,7 +40,7 @@ class App extends Component {
                       this.setState({socket})
 
                       socket.on('err', (err)=>{
-                        console.log("socket-user-mismatch")
+                        console.log(err)
                       })
                     })
                   }}

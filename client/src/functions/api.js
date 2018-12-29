@@ -33,7 +33,8 @@ class API{
       const socket = io(socketUrl)
       socket.on('connect', ()=>{
         socket.emit('USER_CONNECTED', userID)
-        console.log("Connected")
+        let now = new Date()
+        console.log("Connected with userID", userID, now.toLocaleDateString('en-US', {hour: 'numeric', minute: 'numeric', second: 'numeric'}))
         resolve(socket)
       })
 
@@ -65,8 +66,19 @@ class API{
     })
   }
 
+  static SendTurn = (socket, data) => {
+    console.log("Sending turn with this data", data)
+    socket.emit('USER_SENDING_TURN', data)
+  }
+
   static LeaveMatch = (socket, userID) => {
-      socket.emit('USER_LEAVING_MATCH', userID)
+    console.log("leaving match")
+    socket.emit('USER_LEAVING_MATCH', userID)
+  }
+
+  static cancelMatch = (socket, matchID) => {
+    console.log("canceling match")
+    socket.emit('USER_CANCELLING_MATCH', matchID)
   }
 
   static handleResponse(promise){

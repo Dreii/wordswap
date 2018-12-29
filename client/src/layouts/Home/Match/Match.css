@@ -1,0 +1,44 @@
+.score-bar-container{
+  width:100%;
+  height:32px;
+  background-color: gray;
+  position: relative;
+}
+
+.player-score-bar, .enemy-score-bar, .left-crunch, .right-crunch{
+  height: 100%;
+}
+
+.right-crunch, .left-crunch{
+  background: white;
+  opacity: 0.5;
+  position: absolute;
+  max-width: 50%;
+}
+
+.left-crunch {left:0;}
+.right-crunch {right:0;}
+
+.player-score-bar{
+  background-color: blue;
+  float: left;
+  max-width: 100%;
+}
+
+
+.enemy-score-bar{
+  background-color: red;
+  float: right;
+  max-width: 100%;
+}
+
+.shake{
+  animation: shake 0.3ms linear infinite;
+}
+
+@keyframes shake{
+  0%   {transform: translateX(0px);}
+  25%  {transform: translateX(-3px);}
+  75%  {transform: translateX(3px);}
+  100% {transform: translateX(0px);}
+}

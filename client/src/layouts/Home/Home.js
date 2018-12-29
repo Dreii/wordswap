@@ -10,6 +10,7 @@ import './Home.css'
 class Home extends Component {
   state = {
     match: null,
+    matchDisplay: null,
     error: ""
   }
 
@@ -17,7 +18,6 @@ class Home extends Component {
     let pathProps = {...this.props}
     let matchProps = {
       match: this.state.match,
-      setMatch: (match)=>this.setState({match}),
       updateMatch: (match)=>this.setState({match})
     }
 
