@@ -10,6 +10,17 @@ const DBFunctions = {
       if(err) return reject(err)
       else return resolve(rows)
     })
+  }),
+  check: (db, word) => new Promise(function(resolve, reject){
+    db.get(`
+      SELECT * FROM words WHERE word='${word}';
+    `, [], (err, rows)=>{
+      if(err) {
+        console.log(err)
+        return reject(err)
+      }
+      else return resolve(rows)
+    })
   })
 }
 

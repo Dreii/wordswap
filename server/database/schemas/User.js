@@ -19,6 +19,7 @@ module.exports = {
     body: {type: Schema.Types.ObjectId, ref: 'Clothing'},
     hair: {type: Schema.Types.ObjectId, ref: 'Clothing'},
     trunk: [{type: Schema.Types.ObjectId, ref: 'Clothing'}],
-    settings: [Object]
+    settings: [Object],
+    friends: [{type: Schema.Types.ObjectId, red: 'User'}]
   }
 }

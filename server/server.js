@@ -5,7 +5,7 @@ console.log("building..");
 
 //setup Socket.
 app.io = require('./socket/socket-controller')
-app.io.connect(app.db)
+app.io.connect(app.db, app.wordlist)
 
 //Setup Routes.
 require('./routes/route-controller')(app);

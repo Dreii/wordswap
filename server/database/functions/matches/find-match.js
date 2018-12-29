@@ -1,13 +1,16 @@
 let getRandomLetterValues = require('../../../functions/getRandomLetterValues')
+let GetSocketFromUserID = require('../../../functions/GetSocketFromUserID')
 
 module.exports = (self) => async function(userID, socketController){
   let match = await self.schemas.Match.findOne({'playerOne': {$ne: userID},'playerTwo': {$exists: false}}).populate('playerOne').exec()
   if(match){
     let receiver = GetSocketFromUserID(match.playerOne._id.toString(), socketController)
-
-    match = await self.functions.updateMatch(match._id, {
-      playerTwo: userID
-    }, receiver)
+    if(receiver){
+      match = await self.functions.updateMatch(match._id, {
+        playerTwo: userID
+      })
+      receiver.emit('MATCH_UPDATED', match)
+    }
   }else{
     //delete any old matches (garbage collection)
     await self.schemas.Match.deleteMany({$or: [{playerOne: userID}, {playerTwo: userID}]})
@@ -22,11 +25,4 @@ module.exports = (self) => async function(userID, socketController){
   }
 
   return match
-}
-
-GetSocketFromUserID = (userID, socketController) => {
-  let receiver = socketController.connectedUsers.find(obj => obj.user === userID.toString())
-  if(receiver) receiver = receiver.socket
-
-  return socketController.io.sockets.connected[receiver]
 }

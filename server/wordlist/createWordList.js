@@ -2,10 +2,12 @@ const request = require('./DBFunctions')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = () => {
-  let db = new sqlite3.Database('./words.db', (err)=>{
+  let db = new sqlite3.Database('./server/wordlist/words.db', (err, msg)=>{
     if(err){
       return console.log(err.message);
     }
+
+    console.log("should be creating", msg)
 
     let sql = `CREATE TABLE IF NOT EXISTS words (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,9 +19,14 @@ module.exports = () => {
 
     db.get(sql, (err, row)=>{
       if(err) return console.log(err.message);
+      else{
+        db.get(`SELECT * FROM words WHERE word='yes';`, (err, row)=>{
+          console.log("err", err)
+          console.log("row", row)
+        })
+      }
     })
     console.log("connection successful");
-
   })
 
   require('./read-data-from-files')()

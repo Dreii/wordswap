@@ -4,7 +4,7 @@ module.exports = (self, socket, user) => {
 
   //if the user cannot be found, create a new entry in the list of connected users with
   //the user ID and Socket ID paired
-  if(index <= 0){
+  if(index < 0){
     self.connectedUsers.push({
       user: user,
       socket: socket.id
@@ -14,5 +14,4 @@ module.exports = (self, socket, user) => {
     //has reconnected.
     self.connectedUsers[index].socket = socket.id
   }
-  console.log("connect", self.connectedUsers)
 }

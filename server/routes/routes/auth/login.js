@@ -1,6 +1,5 @@
 module.exports = (app) => {
   app.post("/login", (req, res) => {
-    console.log(req.body)
     return app.db.functions.verify(req.body.username)
     .then(user => {
       if(user) return app.db.functions.authenticate(user, req.body.password)

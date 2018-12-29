@@ -16,7 +16,7 @@ app.use(app.bodyParser.urlencoded({
   extended: true
 }));
 
-require('../wordlist/createWordList')()
+app.wordlist = require('../wordlist/createWordList')()
 
 // app.io = require('socket.io')()
 // require('./setupSocketConnections')(app, 8000)

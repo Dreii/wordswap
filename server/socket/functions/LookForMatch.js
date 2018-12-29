@@ -8,6 +8,6 @@ module.exports = (self, socket) => {
     .then(match => socket.emit('MATCH_FOUND', match))
     .catch(err => socket.emit('error', err))
   }else{
-    socket.emit('err', "SOCKET_USER_MISMATCH")
+    socket.emit('err', `SOCKET_USER_MISMATCH socket:${socket.id}, user:${user}`)
   }
 }
