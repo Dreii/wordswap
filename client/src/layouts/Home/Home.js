@@ -18,7 +18,10 @@ class Home extends Component {
     let pathProps = {...this.props}
     let matchProps = {
       match: this.state.match,
-      updateMatch: (match)=>this.setState({match})
+      updateMatch: (match)=>{
+        console.log("updating match", match)
+        this.setState({match})
+      },
     }
 
     return (
@@ -28,7 +31,7 @@ class Home extends Component {
           <p>{this.state.error}</p>
           {this.props.user ? (
             <div className="content">
-                <Route path="/" exact   render={(props)=><Dashboard {...props} pathProps={pathProps} />} />
+                <Route path="/" exact   render={(props)=><Dashboard {...props} matchProps={matchProps} pathProps={pathProps} />} />
                 <Route path="/match"    render={(props)=><Match     {...props} matchProps={matchProps} pathProps={pathProps} />} />
                 <Route path="/settings" render={(props)=><Settings  {...props} pathProps={pathProps} />} />
             </div>

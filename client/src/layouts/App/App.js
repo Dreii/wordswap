@@ -39,9 +39,11 @@ class App extends Component {
                     .then((socket)=>{
                       this.setState({socket})
 
-                      socket.on('err', (err)=>{
+                      socket.on('err', (err) => {
                         console.log(err)
                       })
+
+                      API.SetupRequestReceivers(this, socket)
                     })
                   }}
                 />
@@ -57,6 +59,7 @@ class App extends Component {
                   user={this.state.user}
                   socket={this.state.socket}
                   setUserGlobalState={(newUser)=>{
+                    console.log("setting user")
                     this.setState({user: newUser})
                   }}
                   deauthenticate={()=>this.setState({auth: false})}

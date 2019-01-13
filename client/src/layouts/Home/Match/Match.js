@@ -7,7 +7,7 @@ import InGame from './Stages/InGame'
 import LookingForMatch from './Stages/LookingForMatch'
 import MatchOver from './Stages/MatchOver'
 
-let maxTime = 10
+let maxTime = 30
 
 class Match extends Component {
 
@@ -23,9 +23,11 @@ class Match extends Component {
   }
 
   componentDidMount(){
+    this.testID = Math.random()*10
     if(this.props.pathProps.socket){
       console.log("should be sending")
-      if(!this.props.pathProps.match){
+      if(!this.props.matchProps.match){
+        console.log("cant find match", this.props.matchProps.match)
         API.LookForMatch(this.props.pathProps.socket, this.props.pathProps.user._id)
         .then((res)=>{
           if(res.error){
@@ -37,15 +39,44 @@ class Match extends Component {
         })
       }
 
-      this.props.pathProps.socket.on("MATCH_UPDATED", match => {
-        console.log("match was updated", match)
-        if(match.playerOneHist.length === match.playerTwoHist.length)
+      this.props.pathProps.socket.on("MATCH_UPDATED", (match, leaderBoardData) => {
+        console.log("leaderboard check", match, leaderBoardData)
+        if(match.playerOneHist.length === match.playerTwoHist.length){
           this.setState({waitingForOpponent: false})
+        }
 
         this.props.matchProps.updateMatch(match)
         if(match.round > 0) this.SetTimer()
+        else{
+          let user = this.props.pathProps.user
+          let recentOpponents = user.recentOpponents
+          recentOpponents.push(match.playerOne._id === user._id ? match.playerTwo._id : match.playerOne._id)
+          while(recentOpponents.length > 20) recentOpponents.shift()
+          this.props.pathProps.setUserGlobalState({...user, recentOpponents})
+        }
       })
     }
+
+
+    this. sendTestWin = (e)=>{
+      if(e.key === " " && this.props.matchProps.match.playerTwo !== undefined){
+
+        if(this.props.matchProps.match.playerOneHist.length === this.props.matchProps.match.playerTwoHist.length) {
+          this.setState({waitingForOpponent: true})
+        }
+
+        let data = {
+          matchID: this.props.matchProps.match._id,
+          player: this.props.matchProps.match.playerOne._id === this.props.pathProps.user._id ? 1 : 2,
+          word: "ILILILILILILILILILLIILILILILILILILILILILILILILILILILILILI"
+        }
+
+        data = JSON.stringify(data)
+        API.SendTurn(this.props.pathProps.socket, data)
+      }
+    }
+
+    document.addEventListener("keyup", this.sendTestWin)
   }
 
   componentWillUnmount(){
@@ -56,15 +87,18 @@ class Match extends Component {
 
     let playerTwo = (match !== null) ? this.props.matchProps.match.playerTwo : null
 
-    console.log(socket, match, playerTwo, userID)
-
     if(socket && match && playerTwo !== null){
       API.LeaveMatch(socket, userID)
     }else if(socket && match && playerTwo === null){
       API.cancelMatch(socket, match._id)
     }
 
-    // this.props.matchProps.updateMatch(null)
+    this.ClearTimer()
+    this.props.matchProps.updateMatch(null)
+    this.props.pathProps.socket.off("MATCH_UPDATED")
+
+    document.removeEventListener("keyup", this.sendTestWin)
+    this.sendTestWin = null
   }
 
   SendTurn(){
@@ -127,7 +161,8 @@ class Match extends Component {
 
   render() {
     let {matchProps, pathProps} = this.props
-    let match = matchProps.match ? matchProps.match : null
+    let match = matchProps.match
+    let user = pathProps.user
 
     let matchRender
     if(match && match.playerTwo){
@@ -146,18 +181,19 @@ class Match extends Component {
       else {
         //rounds that = less then 0 mean the game has been won by one of the players
         //-1 means player 1 won, -2 means player 2 won.
-        if(match.round < 0)
-          matchRender = <MatchOver match={match} userID={pathProps.user._id}/>
+        if(match.round < 0){
+          matchRender = <MatchOver match={match} userID={user._id}/>
+        }
         else matchRender = <InGame
                               match={match}
-                              userID={pathProps.user._id}
+                              userID={user._id}
                               playerInput={this.state.playerInput}
-                              setPlayerInput={(input)=>this.setState({playerInput: CheckWordOffline(input, GetRequiredLetter(this.props.matchProps.match, this.props.pathProps.user._id), this)})}
+                              setPlayerInput={(input)=>this.setState({playerInput: CheckWordOffline(input, GetRequiredLetter(match, user._id), this)})}
                               leaveConfirmWindow={this.state.leaveConfirmWindow}
                               setLeaveConfirmWindow={(value)=>this.setState({leaveConfirmWindow: value})}
                               sendTurn={()=>this.SendTurn()}
                               waitingForOpponent={this.state.waitingForOpponent}
-                              requiredLetter={GetRequiredLetter(this.props.matchProps.match, this.props.pathProps.user._id)}
+                              requiredLetter={GetRequiredLetter(match, user._id)}
                               playerInputError={this.state.playerInputError}
                               playerInputErrorShake={this.state.playerInputErrorShake}
                               time={this.state.time}

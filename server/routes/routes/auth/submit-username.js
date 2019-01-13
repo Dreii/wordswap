@@ -20,8 +20,7 @@ module.exports = (app) => {
       }
     })
     .then(userID => {
-      //
-      return app.db.functions.updateUser(userID, {username: req.body.username})
+      return app.db.schemas.User.updateOne({_id: userID}, {username: req.body.username}).exec()
     })
     .then((result)=>{
       console.log(result)

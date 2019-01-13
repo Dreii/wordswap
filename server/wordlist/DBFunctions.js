@@ -13,7 +13,7 @@ const DBFunctions = {
   }),
   check: (db, word) => new Promise(function(resolve, reject){
     db.get(`
-      SELECT * FROM words WHERE word='${word}';
+      SELECT * FROM words WHERE word='${word.toLowerCase()}';
     `, [], (err, rows)=>{
       if(err) {
         console.log(err)

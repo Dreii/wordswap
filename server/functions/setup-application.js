@@ -22,10 +22,18 @@ app.wordlist = require('../wordlist/createWordList')()
 // require('./setupSocketConnections')(app, 8000)
 
 //Prepare DB schema's.
-app.mongoose = require('mongoose');
-app.mongoose.Promise = Promise;
-app.db = require("../database/database-controller");
-app.db.init();
+app.mongoose = require('mongoose')
+app.mongoose.Promise = Promise
+app.db = require("../database/database-controller")
+app.db.init()
+
+app.db.schemas.User.updateMany({}, {$unset:{challenge: ""}})
+.then(res => console.log("challenges reset"))
+
+app.db.schemas.Match.deleteMany({})
+.then(res => console.log("matches cleaned"))
+
+require('./SetupLeaderboard')(app.db)
 
 //Set Port information
 app.set("port", process.env.PORT || 3001);

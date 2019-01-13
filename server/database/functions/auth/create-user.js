@@ -1,5 +1,12 @@
-module.exports = (self) => (data) => {
-  let newUser = new self.schemas.User(data);
+module.exports = (self) => async function(data){
 
-  return newUser.save();
+  let newUser = new self.schemas.User({
+    ...data,
+    // trunk: StartingTrunk(),
+  })
+
+  let newLeaderboardEntry = new self.schemas.Leaderboard({userID: newUser._id})
+  await newLeaderboardEntry.save()
+  
+  return newUser.save()
 }

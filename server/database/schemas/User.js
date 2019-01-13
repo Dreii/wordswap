@@ -10,7 +10,6 @@ module.exports = {
     password: {type: String},
     fbUserID: {type: String, default:''},
     fbAccessToken: {type: String, default :''},
-    rank: {type: Number, default: 0},
     money: {type: Number, default: 0},
     gems: {type: Number, default: 0},
     hat: {type: Schema.Types.ObjectId, ref: 'Clothing'},
@@ -20,6 +19,9 @@ module.exports = {
     hair: {type: Schema.Types.ObjectId, ref: 'Clothing'},
     trunk: [{type: Schema.Types.ObjectId, ref: 'Clothing'}],
     settings: [Object],
-    friends: [{type: Schema.Types.ObjectId, red: 'User'}]
+    friends: [Object],
+    friendRequests: [Object],
+    challenge: {type: Object, default: undefined},
+    recentOpponents: [{type: Schema.Types.ObjectId, ref: 'User'}]
   }
 }

@@ -59,10 +59,6 @@ class API{
       window.setTimeout(()=>{
         resolve({error: "The server is not responding."})
       }, 10*1000)
-
-      socket.on('ERROR', (err)=>resolve({
-        error: "There was an error: "+err
-      }))
     })
   }
 
@@ -79,6 +75,125 @@ class API{
   static cancelMatch = (socket, matchID) => {
     console.log("canceling match")
     socket.emit('USER_CANCELLING_MATCH', matchID)
+  }
+
+  static LookForFriends = (socket, userID, query, recentOpponents) => {
+    return new Promise((resolve, reject)=>{
+      if(query.length > 0) {
+        console.log("looking for friend")
+        socket.emit('USER_LOOKING_FOR_FRIEND', userID, query)
+        socket.on('FRIEND_SEARCH_RESPONSE', (list)=>resolve(list))
+      }else{
+        resolve(recentOpponents)
+      }
+    })
+  }
+
+  static SendChallenge = (socket, challengeRecieverID) => {
+    return new Promise((resolve, reject)=>{
+      console.log("sending challenge")
+      socket.emit("USER_SENDING_CHALLENGE", challengeRecieverID)
+
+      socket.on('CHALLENGE_ACCEPTED', match => {
+        console.log("SEND API Received CA")
+        resolve({accepted: true, match, reason: ""})
+      })
+
+      socket.on('CHALLENGE_REJECTED', reason => {
+        console.log("challenge rejected", reason)
+        resolve({accepted: false, match: null, reason})
+      })
+
+      window.setTimeout(()=>{
+        resolve({accepted: false, match: null, reason: "timeout"})
+      }, 70*1000)
+    })
+  }
+
+  static AcceptChallenge = (socket, challengeSenderID, myID) => {
+    return new Promise((resolve, reject) => {
+      console.log("accepting challenge")
+      socket.emit("USER_ACCEPTING_CHALLENGE", challengeSenderID, myID)
+      socket.on('CHALLENGE_ACCEPTED', match => {
+        console.log("RECEIVE API Received CA")
+        resolve({accepted: true, match, reason: ""})
+      })
+    })
+  }
+
+  static CancelChallenge = (socket, challengeReceiverID) => {
+    console.log("declining challenge")
+    socket.emit("USER_CANCELLING_CHALLENGE", challengeReceiverID)
+  }
+
+  static DeclineChallenge = (socket, challengeSenderID) => {
+    console.log("declining challenge")
+    socket.emit("USER_DECLINING_CHALLENGE", challengeSenderID)
+  }
+
+  static SendFriendRequest = (socket, requesterID, requesteeID) => {
+    return new Promise((resolve, reject)=>{
+      console.log("sending friend request")
+      socket.emit("USER_SENDING_FRIEND_REQUEST", requesterID, requesteeID)
+    })
+  }
+
+  static AcceptFriendRequest = (socket, myID, acceptedID) => {
+    return new Promise((resolve, reject)=>{
+      console.log("accepting friend request")
+      socket.emit("USER_ACCEPTING_FRIEND_REQUEST", myID, acceptedID)
+    })
+  }
+
+  static DeclineFriendRequest = (socket, myID, declinedID) => {
+    return new Promise((resolve, reject)=>{
+      console.log("declining friend request")
+      socket.emit("USER_DECLINING_FRIEND_REQUEST", myID, declinedID)
+    })
+  }
+
+  static SetupRequestReceivers = (self, socket) => {
+    console.log("setting up recievers")
+    socket.on("CHALLENGE_RECEIVED", challenge => {
+      console.log("challenge received")
+      let user = self.state.user
+      if(user) user.challenge = challenge
+      self.setState({
+        user
+      })
+
+      setTimeout(()=>{
+        let user = self.state.user
+        if(user.challenge) delete user.challenge
+        self.setState({
+          user
+        })
+      }, 60*1000)
+    })
+
+    socket.on("FRIEND_REQUEST_RECEIVED", requester => {
+      let user = self.state.user
+      if(user) {
+        if(user.friendRequests.findIndex(request => requester._id === request._id) < 0)
+          user.friendRequests.push(requester)
+      }
+      self.setState({
+        user
+      })
+    })
+
+    socket.on("FRIEND_REQUEST_ACCEPTED", newFriend => {
+      console.log("friend request accepted")
+      let user = self.state.user
+      if(user){
+        user.friends.push(newFriend)
+        let friendIndex = user.friendRequests.findIndex((friendRequest)=>friendRequest._id === newFriend._id)
+        user.friendRequests.splice(friendIndex, 1)
+      }
+      self.setState({
+        user
+      })
+    })
   }
 
   static handleResponse(promise){

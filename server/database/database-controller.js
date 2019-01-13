@@ -22,16 +22,12 @@ class DatabaseController{
       checkFBID: require('./functions/auth/checkFBID')(this),
       checkFBToken: require('./functions/auth/checkFBToken'),
       authenticate: require('./functions/auth/authenticate')(this),
-      createUser: require('./functions/auth/create-user')(this),
-      updateUser: require('./functions/update-user')(this),
-
-      findMatch: require('./functions/matches/find-match')(this),
-      updateMatch: require('./functions/matches/update-match')(this),
+      createUser: require('./functions/auth/create-user')(this)
     }
 
     //create a function initialize the database connection later
     this.init = () => {
-       require('./functions/initiateConnection')();
+       require('./functions/initiateConnection')()
     }
   }
 }

@@ -19,14 +19,8 @@ module.exports = () => {
 
     db.get(sql, (err, row)=>{
       if(err) return console.log(err.message);
-      else{
-        db.get(`SELECT * FROM words WHERE word='yes';`, (err, row)=>{
-          console.log("err", err)
-          console.log("row", row)
-        })
-      }
+      console.log("wordlist connection successful");
     })
-    console.log("connection successful");
   })
 
   require('./read-data-from-files')()
