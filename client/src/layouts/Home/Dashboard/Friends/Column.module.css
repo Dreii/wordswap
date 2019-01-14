@@ -1,0 +1,43 @@
+.column {
+  width: 320px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.title {
+  color: #31a8f2;
+  font-size: 40px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0;
+  /* aligns friends title with friend icons */
+  padding-left: 12px;
+}
+
+.icons {
+  width: 320px;
+  height: 440px;
+  padding-right: 20px;
+  margin-bottom: 0;
+  /* applies scrollbar when content overflows fixed height*/
+  overflow: auto;
+}
+
+.addFriend {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 200px;
+  position: relative;
+  top: -25px;
+}
+
+/* prevents first friend's head from being cut off */
+.icons > div:first-child {
+  margin-top: 20px;
+}
+
+.icons div:last-child {
+  margin-bottom: 0;
+}

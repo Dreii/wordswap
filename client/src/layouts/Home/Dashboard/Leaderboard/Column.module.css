@@ -1,0 +1,14 @@
+/****** LEADERBOARD COLUMN  ******/
+.column {
+  width: 320px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.title {
+  color: #31a8f2;
+  font-size: 40px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0;
+}

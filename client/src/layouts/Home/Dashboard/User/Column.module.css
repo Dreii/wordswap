@@ -1,0 +1,110 @@
+/****** USER COLUMN ******/
+.column {
+  width: 320px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 75px;
+  margin-left: 75px;
+  /* center everything except shop button */
+  text-align: center;
+}
+
+.coin,
+.startMatch,
+.shopButton {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.coin {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  position: relative;
+  margin-top: 13px;
+  margin-bottom: 10px;
+}
+
+.level {
+  color: orange;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline;
+  position: relative;
+  padding-left: 10px;
+  top: -19px;
+}
+
+.points {
+  color: #31a8f2;
+  font-size: 110px;
+  font-weight: bold;
+  margin-top: -25px;
+}
+
+.avatar {
+  display: block;
+  margin-top: -195px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.startMatch {
+  width: 125px;
+  background: linear-gradient(to bottom right, #fa6d6d, #e11b1b);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: block;
+  position: relative;
+  z-index: 1;
+  padding: 10px 30px;
+  border-radius: 5%;
+  margin-top: -85px;
+}
+
+.shopButton,
+.shopButton img {
+  width: 50px;
+  height: 50px;
+  display: block;
+  position: relative;
+  margin-top: -175px;
+  padding-left: 50%;
+}
+
+.moneyIcon {
+  background: #2099ee;
+}
+
+.gemIcon {
+  background: #55ccff;
+}
+
+.moneyIcon,
+.gemIcon {
+  width: 75px;
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+  border-radius: 5%;
+  margin-top: 160px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.moneyIcon path,
+.gemIcon path {
+  color: white;
+}
+
+.moneyIcon span,
+.gemIcon span {
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  padding-left: 5px;
+}

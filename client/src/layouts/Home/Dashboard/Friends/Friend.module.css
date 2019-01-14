@@ -1,0 +1,73 @@
+.friend {
+  width: 295px;
+  height: 70px;
+  background: white;
+  border-radius: 3%;
+  box-shadow: 0 2px #bbb;
+  /*left margin prevents friend's heads from being cut off */
+  margin-left: 13px;
+  margin-right: 200px;
+  margin-bottom: 45px;
+}
+
+.middle,
+.right,
+.left {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.left {
+  width: 90px;
+}
+
+
+.middle {
+  width: 130px;
+  height: 70px;
+  border-right: 2px solid lightgrey;
+}
+
+.right {
+  width: 70px;
+  text-align: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  margin-top: -30px;
+  margin-left: -20px;
+}
+
+.name,
+.points,
+.challenge {
+  margin-bottom: 0;
+}
+
+.name {
+  color: #2099ee;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.25;
+  margin-top: 8px;
+}
+
+.points {
+  color: #bbbbbb;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 0;
+  line-height: 1.25;
+}
+
+.challenge {
+  color: #bbbbbb;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 22px;
+  margin-right: auto;
+  margin-left: auto;
+}

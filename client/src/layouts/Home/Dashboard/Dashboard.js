@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import styles from './Dashboard.module.css'
-
-import Friend from './Friend'
+import Friends from './Friends/Column'
+import User from './User/Column'
+import Leaderboard from './Leaderboard/Column'
 
 class Dashboard extends Component {
 
@@ -10,7 +10,7 @@ class Dashboard extends Component {
     return (
       <div className={styles.dashboard}>
         <div className={styles.nav}>
-          <button><img src="" alt=" "></img></button>
+          <button><img src="/headshots/headshot-1.png" alt=" "></img></button>
           <br/>
         </div>
         { /***
@@ -21,33 +21,13 @@ class Dashboard extends Component {
         </nav> ***/
         }
         <div className={styles.main}>
-          <div className={styles.friends}>
-              <div className={styles.align}>
-                <h2 className={styles.title}>Friends</h2>
-                  <button className={styles['add-friend']}>+ Add Friend</button>
-                <Friend name="Friends Name" points="7845" avatarUrl="/headshots/headshot-0.png" />
-                {//<Friend name="Libby D" points="77" avatarUrl="/headshots/headshot-2.png" />
-                //<Friend name="Sebatian P" points="999" avatarUrl="/headshots/headshot-3.png" />
-                //<Friend name="Skye A" points="7514" avatarUrl="/headshots/headshot-4.png" />
-                }
-              </div>
-          </div>
-
-          <div className={styles.user}>
-            <p>Bronze 34</p>
-            <p>1074</p>
-            <img src="bodyshots/bodyshot-1.png" alt="avatar"/>
-            <Link to="/match">Start Match</Link>
-          </div>
-
-          <div className={styles.user}>
-            <h2 className={styles.title}>Leaderboard</h2>
-          </div>
+          <Friends classname={styles.friends}/>
+          <User classname={styles.user}/>
+          <Leaderboard classname={styles.leaderboard}/>
         </div>
       </div>
     )
   }
-
 }
 
 export default Dashboard

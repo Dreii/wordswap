@@ -1,0 +1,37 @@
+table {
+  width: 300px;
+  border-collapse: collapse;
+  background: white;
+  font-weight: bold;
+  border-radius: 1%;
+  box-shadow: 0 2px #bbb;
+}
+
+tr {
+  height: 50px;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+td {
+  text-align: center;
+}
+
+.rank {
+  width: 30px;
+  font-size: 24px;
+  color: #bbbbbb;
+}
+
+.username {
+  width: 198px;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  border-right: 1px solid #bbbbbb;
+  border-left: 1px solid #bbbbbb;
+}
+
+.points {
+  font-size: 24px;
+  color: #bbbbbb;
+}
