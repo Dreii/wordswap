@@ -1,0 +1,51 @@
+/****** NAVIGATION ******/
+
+.nav {
+  display: block;
+}
+
+.nav button {
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
+  margin-top: 15px;
+}
+
+.nav img {
+  background: white;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+}
+
+/*** Dropdown ***/
+.menu {
+  background: white;
+  float: right;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.menuItem {
+  display: block;
+  width: 150px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.menuItem a {
+  color: #999999;
+}
+
+.menuItem svg {
+  padding-right: 20px;
+}
+
+/* Add a box shadow to the last menu item*/
+nav div:nth-last-child(1) {
+  box-shadow: 0 2px #cccccc;
+}

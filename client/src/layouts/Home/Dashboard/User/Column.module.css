@@ -1,10 +1,11 @@
 /****** USER COLUMN ******/
+
 .column {
   width: 320px;
   display: inline-block;
   vertical-align: top;
-  margin-right: 75px;
-  margin-left: 75px;
+  margin-right: 100px;
+  margin-left: 100px;
   /* center everything except shop button */
   text-align: center;
 }

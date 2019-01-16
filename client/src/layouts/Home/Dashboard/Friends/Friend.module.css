@@ -1,3 +1,5 @@
+/****** FRIEND ICON ******/
+
 .friend {
   width: 295px;
   height: 70px;
@@ -52,6 +54,8 @@
   font-size: 14px;
   line-height: 1.25;
   margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .points {
