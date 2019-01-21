@@ -140,7 +140,9 @@ class Dashboard extends Component {
 
 
         <Leaderboard
-
+          userID={user._id}
+          data={this.props.pathProps.leaderboard}
+          fetching={this.props.pathProps.leaderboardFetching}
         />
 
         {this.state.startMatch ? (

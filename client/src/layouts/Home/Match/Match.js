@@ -7,6 +7,7 @@ import InGame from './Stages/InGame'
 import LookingForMatch from './Stages/LookingForMatch'
 import MatchOver from './Stages/MatchOver'
 
+
 let maxTime = 30
 
 class Match extends Component {
@@ -39,26 +40,28 @@ class Match extends Component {
         })
       }
 
-      this.props.pathProps.socket.on("MATCH_UPDATED", (match, leaderBoardData) => {
-        console.log("leaderboard check", match, leaderBoardData)
-        if(match.playerOneHist.length === match.playerTwoHist.length){
-          this.setState({waitingForOpponent: false})
-        }
-
-        this.props.matchProps.updateMatch(match)
+      this.props.pathProps.socket.on("MATCH_UPDATED", (match) => {
         if(match.round > 0) this.SetTimer()
-        else{
-          let user = this.props.pathProps.user
-          let recentOpponents = user.recentOpponents
-          recentOpponents.push(match.playerOne._id === user._id ? match.playerTwo._id : match.playerOne._id)
-          while(recentOpponents.length > 20) recentOpponents.shift()
-          this.props.pathProps.setUserGlobalState({...user, recentOpponents})
-        }
+        this.setState({waitingForOpponent: false})
+        this.props.matchProps.updateMatch(match)
+      })
+
+      this.props.pathProps.socket.on('MATCH_FINISHED', (match, leaderBoardData) => {
+        console.log("Match finished", match, leaderBoardData)
+        let user = this.props.pathProps.user
+        let recentOpponents = user.recentOpponents
+
+        recentOpponents.push(match.playerOne._id === user._id ? match.playerTwo._id : match.playerOne._id)
+        while(recentOpponents.length > 20) recentOpponents.shift()
+
+        this.setState({waitingForOpponent: false})
+        this.props.matchProps.updateMatch(match)
+        this.props.pathProps.setUserGlobalState({...user, recentOpponents})
+        this.props.pathProps.SetLeaderboardGlobalState(leaderBoardData)
       })
     }
 
-
-    this. sendTestWin = (e)=>{
+    this.sendTestWin = (e)=>{
       if(e.key === " " && this.props.matchProps.match.playerTwo !== undefined){
 
         if(this.props.matchProps.match.playerOneHist.length === this.props.matchProps.match.playerTwoHist.length) {
@@ -117,7 +120,7 @@ class Match extends Component {
     if(this.props.matchProps.match.round > 0){
       this.setState({time: maxTime})
       this.setState({initialTime: new Date()})
-      this.timer = setInterval(()=> {
+      this.timer = setInterval(() => {
         let now = new Date()
         let time = maxTime - Math.floor((now.getTime() - this.state.initialTime.getTime())/1000)
         // console.log(maxTime, now.getTime(), this.state.initialTime.getTime(), time)
@@ -182,7 +185,7 @@ class Match extends Component {
         //rounds that = less then 0 mean the game has been won by one of the players
         //-1 means player 1 won, -2 means player 2 won.
         if(match.round < 0){
-          matchRender = <MatchOver match={match} userID={user._id}/>
+          matchRender = <MatchOver match={match} userID={user._id} leaderboard={this.props.pathProps.leaderboard}/>
         }
         else matchRender = <InGame
                               match={match}

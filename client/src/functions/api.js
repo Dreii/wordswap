@@ -44,6 +44,18 @@ class API{
     })
   }
 
+  static RequestLeaderboard = (socket, requesterID) =>{
+    return new Promise((resolve, reject) => {
+      socket.emit('USER_REQUESTING_LEADERBOARD', requesterID)
+      socket.on('LEADERBOARD_DATA_RETURNED', (data) => {
+        resolve(data)
+      })
+
+      socket.on('error', (err)=>{
+        reject(err)
+      })
+    })
+  }
 
   static LookForMatch = (socket, userID) => {
     return new Promise((resolve, reject) => {

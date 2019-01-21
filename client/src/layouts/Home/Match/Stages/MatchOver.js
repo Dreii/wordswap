@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Leaderboard from '../../../../components/Leaderboard/Leaderboard'
 
-const MatchOver = ({match, userID}) => (
+const MatchOver = ({match, userID, leaderboard}) => (
   <div>
     <Link to="/">Back Home</Link>
     {match.round === -3 ?(
@@ -13,6 +14,11 @@ const MatchOver = ({match, userID}) => (
         match.round === -2 ? "You Win" : "You Lose..."
       )
     )}
+
+    <Leaderboard
+      userID={userID}
+      data={leaderboard}
+    />
   </div>
 )
 

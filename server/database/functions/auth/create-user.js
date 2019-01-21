@@ -7,6 +7,6 @@ module.exports = (self) => async function(data){
 
   let newLeaderboardEntry = new self.schemas.Leaderboard({userID: newUser._id})
   await newLeaderboardEntry.save()
-  
+
   return newUser.save()
 }

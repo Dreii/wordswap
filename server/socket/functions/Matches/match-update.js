@@ -5,7 +5,7 @@ let FinishedMatch = require('./FinishedMatch')
 module.exports = async function(self, requests){
 
   //find the curent match using the ID provided
-  let currentMatch = await self.db.schemas.Match.findOne({_id: requests.matchID}).populate('playerOne').populate('playerTwo').exec()
+  let currentMatch = await self.db.schemas.Match.findOne({_id: requests.matchID}).exec()
 
   //the word history
   let history1 = currentMatch.playerOneHist,
@@ -48,14 +48,6 @@ module.exports = async function(self, requests){
   if(score < round*100) round = -1
   if(round > 10) round = -3
 
-  let finishedMatchData, p1LeaderBoardData = [], p2LeaderBoardData = []
-
-  if(round < 0){
-    finishedMatchData = await FinishedMatch(self, currentMatch, round)
-    p1LeaderBoardData = finishedMatchData.p1
-    p2LeaderBoardData = finishedMatchData.p2
-  }
-
   //compile update object
   update = {
     playerOneHist: history1,
@@ -64,13 +56,22 @@ module.exports = async function(self, requests){
     round
   }
 
-  console.log(p1LeaderBoardData)
-
   //initiate update
   let match = await self.db.schemas.Match.findOneAndUpdate({_id: requests.matchID}, update, {new: true})
-  .populate('playerOne', 'name username hat shirt pants body hair')
-  .populate('playerTwo', 'name username hat shirt pants body hair')
+  .populate('playerOne', 'name username hat shirt pants body hair recentOpponents')
+  .populate('playerTwo', 'name username hat shirt pants body hair recentOpponents')
+  .exec()
 
-  self.io.to(p1Socket).emit('MATCH_UPDATED', match, p1LeaderBoardData)
-  self.io.to(p2Socket).emit('MATCH_UPDATED', match, p2LeaderBoardData)
+  match = match.toObject()
+
+  console.log(match)
+
+  if(round < 0){
+    let finishedMatchData, p1LeaderBoardData = [], p2LeaderBoardData = []
+
+    await FinishedMatch(self, match, round, p1Socket, p2Socket)
+  }else{
+    self.io.to(p1Socket).emit('MATCH_UPDATED', match)
+    self.io.to(p2Socket).emit('MATCH_UPDATED', match)
+  }
 }

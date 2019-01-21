@@ -6,6 +6,8 @@ let ConnectUser = require('./functions/connect-user')
 let UserDisconnected = require('./functions/user-disconnected')
 let DisplayConnectedUsers = require('./functions/display-connected-users')
 
+let GetLeaderboard = require('./functions/Leaderboard/GetLeaderboard')
+
 let LookForMatch = require('./functions/Matches/look-for-match')
 let KickUserFromMatch = require('./functions/Matches/kick-user-from-match')
 let CancelMatch = require('./functions/Matches/cancel-match')
@@ -72,6 +74,8 @@ class SocketController{
         socket.on('USER_DECLINING_CHALLENGE',      (challengeSenderID) => DeclineChallenge(this, socket, challengeSenderID))
 
         socket.on('USER_CANCELLING_CHALLENGE',     (challengeReceiverID) => CancelChallenge(this, socket, challengeReceiverID))
+
+        socket.on('USER_REQUESTING_LEADERBOARD',   (requesterID) => GetLeaderboard(this, socket, requesterID))
 
         socket.on('disconnect',                    () => {
                                                      UserDisconnected(this, socket)

@@ -19,6 +19,8 @@ class App extends Component {
     token: "",
     user: null,
     socket: null,
+    leaderboard: [],
+    leaderboardFetching: false
   }
 
   render() {
@@ -39,8 +41,16 @@ class App extends Component {
                     .then((socket)=>{
                       this.setState({socket})
 
-                      socket.on('err', (err) => {
-                        console.log(err)
+                      socket.on('err', (err) => console.log(err))
+
+                      this.setState({leaderboardFetching: true})
+
+                      API.RequestLeaderboard(socket, user._id)
+                      .then((leaderboard) => {
+                        console.log("leaderboard data came in", leaderboard)
+                        this.setState({leaderboard, leaderboardFetching: false})
+
+                        socket.on('err', (err)=> console.log(err))
                       })
 
                       API.SetupRequestReceivers(this, socket)
@@ -57,12 +67,13 @@ class App extends Component {
                   redirect={()=> this.state.user ? null : <Redirect to="/login" />}
                   token={this.state.token}
                   user={this.state.user}
+                  leaderboard={this.state.leaderboard}
+                  leaderboardFetching={this.state.leaderboardFetching}
                   socket={this.state.socket}
-                  setUserGlobalState={(newUser)=>{
-                    console.log("setting user")
-                    this.setState({user: newUser})
-                  }}
-                  deauthenticate={()=>this.setState({auth: false})}
+                  setUserGlobalState={(newUser) => this.setState({user: newUser})}
+                  SetLeaderboardGlobalState={(newLeaderboard) => this.setState({leaderboard: newLeaderboard})}
+                  SetLeaderboardFetchingState={(newFetchState) => this.setState({leaderboardFetching: newFetchState})}
+                  deauthenticate={() => this.setState({auth: false})}
                 />
               )}
             />

@@ -1,0 +1,8 @@
+.leaderboardContainer{
+  overflow-y: scroll;
+  height: 300px
+}
+
+.currentPlayer{
+  font-weight: bolder;
+}

@@ -23,6 +23,7 @@ app.wordlist = require('../wordlist/createWordList')()
 
 //Prepare DB schema's.
 app.mongoose = require('mongoose')
+app.mongoose.set('useFindAndModify', false)
 app.mongoose.Promise = Promise
 app.db = require("../database/database-controller")
 app.db.init()
