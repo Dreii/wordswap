@@ -1,4 +1,4 @@
-let RandomRange = require('./RandomRange')
+let RandomRange = require('../../../global-functions/RandomRange')
 
 /**
  * Setup leaderboard to have starting data

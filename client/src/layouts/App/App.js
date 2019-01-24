@@ -70,7 +70,7 @@ class App extends Component {
                   leaderboard={this.state.leaderboard}
                   leaderboardFetching={this.state.leaderboardFetching}
                   socket={this.state.socket}
-                  setUserGlobalState={(newUser) => this.setState({user: newUser})}
+                  SetUserGlobalState={(newUser) => this.setState({user: newUser})}
                   SetLeaderboardGlobalState={(newLeaderboard) => this.setState({leaderboard: newLeaderboard})}
                   SetLeaderboardFetchingState={(newFetchState) => this.setState({leaderboardFetching: newFetchState})}
                   deauthenticate={() => this.setState({auth: false})}

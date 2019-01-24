@@ -18,9 +18,6 @@ app.use(app.bodyParser.urlencoded({
 
 app.wordlist = require('../wordlist/createWordList')()
 
-// app.io = require('socket.io')()
-// require('./setupSocketConnections')(app, 8000)
-
 //Prepare DB schema's.
 app.mongoose = require('mongoose')
 app.mongoose.set('useFindAndModify', false)
@@ -34,7 +31,7 @@ app.db.schemas.User.updateMany({}, {$unset:{challenge: ""}})
 app.db.schemas.Match.deleteMany({})
 .then(res => console.log("matches cleaned"))
 
-require('./SetupLeaderboard')(app.db)
+require('../socket/functions/Leaderboard/SetupInitialLeaderboards')(app.db)
 
 //Set Port information
 app.set("port", process.env.PORT || 3001);

@@ -61,15 +61,11 @@ class API{
     return new Promise((resolve, reject) => {
       socket.emit('USER_LOOKING_FOR_MATCH', userID)
       socket.on('MATCH_FOUND', (match)=>{
-        console.log("match found", match)
-        resolve({
-          match,
-          error: null,
-        })
+        resolve(match)
       })
 
       window.setTimeout(()=>{
-        resolve({error: "The server is not responding."})
+        reject({error: "The server is not responding."})
       }, 10*1000)
     })
   }

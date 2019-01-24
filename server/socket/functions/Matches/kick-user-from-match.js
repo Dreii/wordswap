@@ -19,7 +19,7 @@ module.exports = async function(self, userID){
       ): null
     }
 
-    if(receiver) return receiver.emit('MATCH_UPDATED', newMatch)
+    if(!!receiver) return receiver.emit('MATCH_FINISHED', newMatch)
   }else{
     return null
   }

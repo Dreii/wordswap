@@ -5,15 +5,15 @@
  * @param  {[String]} userID   [User ID of the user connecting]
  */
 
-module.exports = (self, socket, user) => {
+module.exports = (self, socket, userID) => {
   //check if the user is already in the list of connected users
-  let index = self.connectedUsers.findIndex(obj => obj.user.toString() === user.toString())
+  let index = self.connectedUsers.findIndex(obj => obj.user.toString() === userID.toString())
 
   //if the user cannot be found, create a new entry in the list of connected users with
   //the user ID and Socket ID paired
   if(index < 0){
     self.connectedUsers.push({
-      user: user,
+      user: userID,
       socket: socket.id
     })
   }else{

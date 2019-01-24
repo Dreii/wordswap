@@ -10,8 +10,8 @@ const InGame = ({
   setLeaveConfirmWindow,
   leaveConfirmWindow,
   sendTurn,
-  waitingForOpponent,
   requiredLetter,
+  waitingForOpponent,
   playerInputError,
   playerInputErrorShake,
   time

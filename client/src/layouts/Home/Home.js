@@ -14,12 +14,19 @@ class Home extends Component {
     error: ""
   }
 
+  componentDidMount(){
+    window.addEventListener('unhandledrejection', (event)=>{
+      console.log(event.reason, event.promise) // [object Promise] - the promise that generated the error
+      this.setState(event.reason) // Error: Whoops! - the unhandled error object
+    })
+  }
+
   render() {
     let pathProps = {...this.props}
     let matchProps = {
       match: this.state.match,
-      updateMatch: (match)=>{
-        console.log("updating match", match)
+      UpdateMatch: (match)=>{
+        // console.log("updating match", match)
         this.setState({match})
       },
     }

@@ -1,5 +1,5 @@
 //Initialize server application.
-const app = require('./functions/setup-application');
+const app = require('./global-functions/setup-application');
 
 console.log("building..");
 

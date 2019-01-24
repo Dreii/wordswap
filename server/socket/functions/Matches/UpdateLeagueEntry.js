@@ -1,4 +1,4 @@
-let RandomRange = require('../../../functions/RandomRange')
+let RandomRange = require('../../../global-functions/RandomRange')
 let mongoose = require('mongoose')
 
 module.exports = async function GetUpdatedELO(self, match, round){
